@@ -16,8 +16,8 @@ void init_config_rand(char *configuration, parameters params){
 }
 
 void init_config_rng(char *configuration, unsigned long int seed, parameters params){
-	long int n= params.n;
-	long int p= params.p;
+	long int n= params.N;
+	long int p= params.P;
 	long int size= n * p;
 	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set(r, seed); // set the seed for the rng
