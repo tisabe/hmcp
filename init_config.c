@@ -28,3 +28,10 @@ void init_config_rng(char *configuration, unsigned long int seed, parameters par
     	}
     	gsl_rng_free(r);
 }
+
+void init_zero(double *h, parameters params) {
+	unsigned int max_ind = params.N*params.P;
+	for (unsigned int i=0, i<max_ind; i++) {
+		h[i] = 0.0;
+	}
+}
