@@ -142,9 +142,9 @@ void step_mc(double *p, double *h, gsl_rng * r, parameters params) {
 	Delta_H= hamiltonian(p, h, params) - H_0;
 
 	if (Delta_H >= 0) { 
-		double p = exp(-1*Delta_H);
+		double prob = exp(-1*Delta_H);
 
-		if (gsl_rng_get (r)/r_max > p) {
+		if (gsl_rng_get (r)/r_max > prob) {
 			memcpy(p, p0, size);
 			memcpy(h, h0, size);
 			acceptance = 1;
