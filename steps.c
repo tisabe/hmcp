@@ -113,7 +113,7 @@ void step_md(double *p, double *h, parameters params) {
 
 }
 
-void step_mc(double *p, double *h, parameters params) {
+void step_mc(double *p, double *h, gsl_rng * r, parameters params) {
     /*
     this function performs the metropolis step
 
@@ -124,4 +124,34 @@ void step_mc(double *p, double *h, parameters params) {
     output:
         void
     */
+
+	// the while loop performs as long a h_tilde(1) is rejected
+	double r_max = gsl_rng_max(r);
+	int count = 0;
+	double H_0 = hamiltonian(p, h, params);
+
+	while (count == 0){
+
+		double p0 = p;
+		double h0 = h;
+	
+		step_md(p, h, params);
+
+		Delta_H= hamiltonian(p, h, params) - H_0;
+
+		if (Delta_H >= 0) {
+			double p = exp(-1*Delta_H);
+
+			if (gsl_rng_get (r)/r_max > p) {
+				p = p0;
+				h = h0;
+			} else {
+				count = 1;
+			}
+		} else if (Delta_H < 0) {
+			count = 1;
+		}
+	}
+
+	
 }
