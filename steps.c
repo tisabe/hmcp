@@ -29,21 +29,19 @@ double action(double *h, parameters params) {
         double s2 = 0.0; // second partial sum
 
         for (int n=0; n<N; n++) {
-            double diff = h[tup2ind(n, p+1, N)] - h[tup2ind(n, p, N)];
+            double diff = h[tup2ind(n, p+1, N, P)] - h[tup2ind(n, p, N, P)];
             s1 += diff*diff;
         }
-        s1 *= P*P/(beta*beta*2);
+        s1 *= P/(beta*2);
 
         for (int n=1; n<N; n++) {
-            double diff = h[tup2ind(n, p, N)] - h[tup2ind(n-1, p, N)];
+            double diff = h[tup2ind(n, p, N, P)] - h[tup2ind(n-1, p, N, P)];
             s2 += diff*diff;
         }
-        s2 *= v0*v0/2;
+        s2 *= beta*v0*v0/(2*P);
 
-        s += v0*v0/2*h[0,p]*h[0,p] + s1 + s2;
+        s += s1 + s2;
     }
-    s *= beta/P;
-
     return s;
 }
 
