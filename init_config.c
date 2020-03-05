@@ -7,15 +7,8 @@
 /*********************************************************************************
 this function creates an array of length "size" with random entries between 0 and 1.
 **********************************************************************************/
-void init_config_rand(char *configuration, parameters params){
-	long int L= params.L;
 
-    for (int i=0; i<L; i++) {
-        configuration[i] = 2*(rand() % 2) - 1;
-    }
-}
-
-void init_config_rng(char *configuration, unsigned long int seed, parameters params){
+void init_config_rng(double *configuration, unsigned long int seed, parameters params){
 	long int n= params.N;
 	long int p= params.P;
 	long int size= n * p;
