@@ -125,34 +125,29 @@ void step_mc(double *p, double *h, gsl_rng * r, parameters params) {
         void
     */
 
-	// the while loop performs as long as h_tilde(1) is rejected
+	//to do: needs to give back "acceptance" to calculate the overall acceptance
+
 	double r_max = gsl_rng_max(r);
-	int count = 0;
+	int acceptance = 0;
 	double H_0 = hamiltonian(p, h, params);
+	unsigned int N = params.N;
+   	unsigned int P = params.P;
+	unsigned int size = N * P;
+		
+	double *p0 = malloc(size * sizeof(double))
+	double *h0 = malloc(size * sizeof(double))
 
-	while (count == 0){
+	step_md(p, h, params);
 
-		double p0 = p;
-		double h0 = h;
-	
-		step_md(p, h, params);
+	Delta_H= hamiltonian(p, h, params) - H_0;
 
-		Delta_H= hamiltonian(p, h, params) - H_0;
+	if (Delta_H >= 0) { 
+		double p = exp(-1*Delta_H);
 
-
-		if (Delta_H < 0) { // if Delta_H is smaller than 0, everthing is fine, the new h is accepted and the while loop ends
-			count = 1;
-		} else if (Delta_H >= 0) { 
-			double p = exp(-1*Delta_H);
-
-			if (gsl_rng_get (r)/r_max < p) { // if that is not the case, accept the new h with probability p and end the while loop
-				count = 1;
-			} else { // else the while loop conitnues with the old value of h and p
-				p = p0;
-				h = h0;
-			}
+		if (gsl_rng_get (r)/r_max > p) {
+			memcpy(p, p0, size);
+			memcpy(h, h0, size);
+			acceptance = 1;
 		}
 	}
-
-	
 }
