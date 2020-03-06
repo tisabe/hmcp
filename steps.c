@@ -113,7 +113,7 @@ void step_md(double *p, double *h, parameters params) {
 
 }
 
-void step_mc(double *p, double *h, gsl_rng * r, parameters params) {
+int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
     /*
     this function performs the metropolis step
 
@@ -122,32 +122,43 @@ void step_mc(double *p, double *h, gsl_rng * r, parameters params) {
         double *h: displacements (N*P matrix)
         parameters params: struct with parameters
     output:
-        void
+        int acceptance: if the step was accepted 1, if not 0
     */
 
 	//to do: needs to give back "acceptance" to calculate the overall acceptance
 
 	double r_max = gsl_rng_max(r);
-	int acceptance = 0;
 	double H_0 = hamiltonian(p, h, params);
 	unsigned int N = params.N;
    	unsigned int P = params.P;
 	unsigned int size = N * P;
-		
-	double *p0 = malloc(size * sizeof(double))
-	double *h0 = malloc(size * sizeof(double))
+
+	double *p0 = malloc(size * sizeof(double));
+	double *h0 = malloc(size * sizeof(double));
+    // copy the state to reset the config, if it's not accepted after the step
+    memcpy(p0, p, size*sizeof(double));
+    memcpy(h0, h, size*sizeof(double));
 
 	step_md(p, h, params);
 
 	Delta_H= hamiltonian(p, h, params) - H_0;
 
-	if (Delta_H >= 0) { 
+	if (Delta_H >= 0) {
+        // the new energy is higher so the probability of accepting the higher energy needs to be calculated
 		double prob = exp(-1*Delta_H);
 
 		if (gsl_rng_get (r)/r_max > prob) {
-			memcpy(p, p0, size);
-			memcpy(h, h0, size);
-			acceptance = 1;
-		}
-	}
+            // the random number is higher than the calculated probability, reject the step
+            // copy the old configuration into the "output"
+            memcpy(p, p0, size*sizeof(double));
+			memcpy(h, h0, size*sizeof(double));
+			return 0;
+		} else {
+            // the random number is smaller, accept the step
+            return 1;
+        }
+	} else {
+        // the new energy is smaller, accept the step
+        return 1;
+    }
 }
