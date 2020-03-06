@@ -66,10 +66,18 @@ double hamiltonian(double *p, double *h, parameters params) {
         double *h: displacements (N*P matrix)
         parameters params: struct with parameters
     output:
+        double H_out: the hamiltonian of the system according to eq. (10)
     */
+    unsigned int size = params.N*param.P;
+    double H_out = 0.0;
+    for (unsigned int i=0; i<size; i++) {
+        H_out += p[i]*p[i];
+    }
+    H_out = H_out/2 + action(h, params);
+    return H_out;
 }
 
-void heat_bath(double *p, parameters params) {
+void heat_bath(double *p, gsl_rng * r, parameters params) {
     /* this function updates the momenta with gaussian distributed random momenta
 
     input:
@@ -78,6 +86,10 @@ void heat_bath(double *p, parameters params) {
     output:
         void
     */
+    unsigned int size = params.N*param.P;
+    for (unsigned int i=0; i<size; i++) {
+        p[i] = gsl_ran_gaussian(r, 1.0);
+    }
 }
 
 void step_md(double *p, double *h, parameters params) {
