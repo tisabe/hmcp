@@ -24,17 +24,17 @@ double action(double *h, parameters params) {
 
     double s = 0.0; // total sum
 
-    for (int p=0; p<(P-1); p++) {
+    for (int p=0; p<P; p++) {
         double s1 = 0.0; // first partial sum
         double s2 = 0.0; // second partial sum
 
-        for (int n=0; n<(N-1); n++) {
+        for (int n=0; n<N; n++) {
             double diff = h[tup2ind(n, p+1, N, P)] - h[tup2ind(n, p, N, P)];
             s1 += diff*diff;
         }
         s1 *= P/(beta*2);
 
-        for (int n=1; n<(N-1); n++) {
+        for (int n=1; n<N; n++) {
             double diff = h[tup2ind(n, p, N, P)] - h[tup2ind(n-1, p, N, P)];
             s2 += diff*diff;
         }
@@ -61,8 +61,8 @@ void force(double *f, double *h, parameters params) {
     double beta = params.beta;
     unsigned int size = N * P;
 
-    for (int n=0; n<(N-1); n++) {
-        for (int p=0; p<(P-1); p++) {
+    for (int n=0; n<N; n++) {
+        for (int p=0; p<P; p++) {
             double a1 = 0.0; // summand A(n,p)
             double b1 = 0.0; // summand B(n,p)
             if (p==0) {
