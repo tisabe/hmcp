@@ -1,0 +1,21 @@
+Androidmop:
+Comments after first reading of code up until now:
+
+init_config.c:
+
+L. 19: var L undeclared
+L. 27: wrong comma
+
+steps.c:
+
+L. 139: *f not freed
+L. 81: h[tup2ind(0, p, N, P)] -> h[tup2ind(n, p, N, P)]
+L. 37: Where do we make sure that h[tup2ind(0, p, N, P)]==0 ?
+L. 137: forced float division required
+L. 144: introduce long size=N*P to avoid multiplication M times
+
+
+utils.h:
+
+needs update
+
