@@ -29,7 +29,7 @@ int main() {
     for (unsigned int m=10; m<=max_M; m+=10) {
         params.M = m; // update the number of leapfrog steps
         init_zero(h, params); // initialize the configuration to zero
-        init_config_rand(p, params);
+        init_config_rng(p, params); //rng needs a seed atm
         double ham = hamiltonian(p, h, params); // calculate the prior hamiltonian
 
         step_md(p, h, params); // perform the md simulation
