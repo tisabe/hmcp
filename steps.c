@@ -65,9 +65,9 @@ void force(double *f, double *h, parameters params) {
         for (int p=0; p<P; p++) {
             double a1 = 0.0; // summand A(n,p)
             double b1 = 0.0; // summand B(n,p)
-            
+
             a1 = P/beta * (h[tup2ind(n, p+1, N, P)] + h[tup2ind(n, p-1, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
-            
+
             if (n==0) {
                 b1 = beta * v0 * v0/P * (h[tup2ind(1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
             }
@@ -148,7 +148,7 @@ void step_md(double *p, double *h, parameters params) {
         force(f, h, params);
         vec_scalar_vec_add(p, tau/2, f, p, size);
     }
-    
+
     free(f);
 }
 
@@ -189,17 +189,17 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
 		if (gsl_rng_get (r)/r_max > prob) {
             // the random number is higher than the calculated probability, reject the step
             // copy the old configuration into the "output"
-      memcpy(p, p0, size*sizeof(double));
+            memcpy(p, p0, size*sizeof(double));
 			memcpy(h, h0, size*sizeof(double));
 			return 0;
 		}
-    else {
+        else {
             // the random number is smaller, accept the step
             return 1;
-    }
+        }
 	}
     else {
         // the new energy is smaller, accept the step
         return 1;
-  }
+    }
 }
