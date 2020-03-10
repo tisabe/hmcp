@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-unsigned int tup2ind(unsigned int n, unsigned int p, unsigned int N, unsigned int P) {
+unsigned int tup2ind(unsigned int n, int p, unsigned int N, unsigned int P) {
     /*
     this function converts a 2 tupel of indices to a combined index, to call
     elements of a 2D matrix with periodic boundaries.
@@ -9,14 +9,14 @@ unsigned int tup2ind(unsigned int n, unsigned int p, unsigned int N, unsigned in
 
     input:
         unsigned int n: first index of the matrix (row)
-        unsigned int p: second index of the matrix (column)
+        int p: second index of the matrix (column)
         unsigned int N: number of rows of the matrix
         unsigned int P: number of columns of the matrix
     output:
         unsigned int ind: 1D raveled index
     */
     n %= N; // apply the periodic boundary conditions in N
-    p %= P; // apply the periodic boundary conditions in P
+    p = (p + P) % P; // apply the periodic boundary conditions in P
 
     unsigned long ind = N*p + n;
     if (ind >= UINT_MAX) {
