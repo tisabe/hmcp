@@ -14,10 +14,10 @@ void init_config_rng(double *configuration, unsigned long int seed, parameters p
 	long int size= n * p;
 	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set(r, seed); // set the seed for the rng
-	//double r_max = gsl_rng_max(r);
+	double r_max = gsl_rng_max(r);
 
     	for (int i=0; i<size; i++) {
-		configuration[i] = r/r_max;
+		configuration[i] = gsl_rng_get(r)/r_max;
     	}
     	gsl_rng_free(r);
 }
