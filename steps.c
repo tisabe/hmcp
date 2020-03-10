@@ -65,11 +65,8 @@ void force(double *f, double *h, parameters params) {
         for (int p=0; p<P; p++) {
             double a1 = 0.0; // summand A(n,p)
             double b1 = 0.0; // summand B(n,p)
-            if (p==0) {
-                a1 = P/beta * (h[tup2ind(n, 1, N, P)] - h[tup2ind(n, 0, N, P)]);
-            }
-            else {
-                a1 = P/beta * (h[tup2ind(n, p+1, N, P)] + h[tup2ind(n, p-1, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
+            
+            a1 = P/beta * (h[tup2ind(n, p+1, N, P)] + h[tup2ind(n, p-1, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
             }
             if (n==0) {
                 b1 = beta * v0 * v0/P * (h[tup2ind(1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
@@ -78,7 +75,7 @@ void force(double *f, double *h, parameters params) {
                 b1 = beta * v0 * v0/P * (h[tup2ind(N-2, p, N, P)] - h[tup2ind(N-1, p, N, P)]);
             }
             else {
-                b1 = beta * v0 * v0/P * (h[tup2ind(n+1, p, N, P)] + h[tup2ind(n-1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
+                b1 = beta * v0 * v0/P * (h[tup2ind(n+1, p, N, P)] + h[tup2ind(n-1, p, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
             }
             f[tup2ind(n, p, N, P)]= a1 + b1;
         }
