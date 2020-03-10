@@ -3,5 +3,5 @@ main: geometry.c vmath.c metropolis.c init_config.c
 	./main.exe
 
 test_md: utils.c init_config.c steps.c
-	gcc test_md.c -lm utils.c steps.c -lgsl -o test_md.exe -lm
+	gcc test_md.c -lm utils.c steps.c -lgsl -o test_md.exe
 	./test_md.exe
