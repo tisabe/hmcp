@@ -15,13 +15,13 @@ as required, for large number of leapfrog steps within the MD.
 
 int main() {
     printf("Testing convergence of energy in the MD simulation...\n");
-    int max_M = 100;
+    int max_M = 2000;
     parameters params;
     params.N = 10;
     params.v0 = 0.2;
     params.beta = 0.7;
     params.P = 50;
-
+	params.size = 10*50;
     double *h = malloc(params.N*params.P*sizeof(double));
     double *h_out = malloc(params.N*params.P*sizeof(double));
     double *p = malloc(params.N*params.P*sizeof(double));
