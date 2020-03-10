@@ -16,7 +16,7 @@ void init_config_rng(double *configuration, unsigned long int seed, parameters p
 	gsl_rng_set(r, seed); // set the seed for the rng
 	//double r_max = gsl_rng_max(r);
 
-    	for (int i=0; i<L; i++) {
+    	for (int i=0; i<size; i++) {
 		configuration[i] = r/r_max;
     	}
     	gsl_rng_free(r);
@@ -24,7 +24,7 @@ void init_config_rng(double *configuration, unsigned long int seed, parameters p
 
 void init_zero(double *h, parameters params) {
 	unsigned int max_ind = params.N*params.P;
-	for (unsigned int i=0, i<max_ind; i++) {
+	for (unsigned int i=0; i<max_ind; i++) {
 		h[i] = 0.0;
 	}
 }
