@@ -129,25 +129,27 @@ void step_md(double *p, double *h, parameters params) {
     */
     unsigned int N = params.N;
     unsigned int P = params.P;
+    unsigned int size = params.size;
     unsigned int M = params.M;
 
-    double tau = 1/M; // MD time
+    double tau = 1.0/M; // MD time
 
-    double *f = malloc(N*P*sizeof(double));
+    double *f = malloc(size*sizeof(double));
 
     for (int m=0; m<M; m++) {
         // step 1
         force(f, h, params);
-        vec_scalar_vec_add(p, tau/2, f, p, N*P);
+        vec_scalar_vec_add(p, tau/2, f, p, size);
 
         //step 2
-        vec_scalar_vec_add(h, tau, p, h, N*P);
+        vec_scalar_vec_add(h, tau, p, h, size);
 
         //step 3
         force(f, h, params);
-        vec_scalar_vec_add(p, tau/2, f, p, N*P);
+        vec_scalar_vec_add(p, tau/2, f, p, size);
     }
-
+    
+    free(f);
 }
 
 int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
@@ -167,18 +169,18 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
 	double r_max = gsl_rng_max(r);
 	double H_0 = hamiltonian(p, h, params);
 	unsigned int N = params.N;
-  unsigned int P = params.P;
+    unsigned int P = params.P;
 	unsigned int size = N * P;
 
 	double *p0 = malloc(size * sizeof(double));
 	double *h0 = malloc(size * sizeof(double));
     // copy the state to reset the config, if it's not accepted after the step
-  memcpy(p0, p, size*sizeof(double));
-  memcpy(h0, h, size*sizeof(double));
+    memcpy(p0, p, size*sizeof(double));
+    memcpy(h0, h, size*sizeof(double));
 
 	step_md(p, h, params);
 
-	Delta_H= hamiltonian(p, h, params) - H_0;
+	double Delta_H= hamiltonian(p, h, params) - H_0;
 
 	if (Delta_H >= 0) {
         // the new energy is higher so the probability of accepting the higher energy needs to be calculated
@@ -196,7 +198,7 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
             return 1;
     }
 	}
-  else {
+    else {
         // the new energy is smaller, accept the step
         return 1;
   }
