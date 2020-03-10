@@ -26,10 +26,12 @@ int main() {
     double *p = malloc(params.N*params.P*sizeof(double));
     double *p_out = malloc(params.N*params.P*sizeof(double));
 
+    
+    
     for (unsigned int m=10; m<=max_M; m+=10) {
         params.M = m; // update the number of leapfrog steps
         init_zero(h, params); // initialize the configuration to zero
-        init_config_rng(p, params); //rng needs a seed atm
+        init_config_rng(p, 42, params); //rng needs a seed atm
         double ham = hamiltonian(p, h, params); // calculate the prior hamiltonian
 
         step_md(p, h, params); // perform the md simulation
