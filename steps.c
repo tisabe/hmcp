@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
 #include <limits.h>
 
 #include "structs.h"
@@ -65,20 +67,16 @@ void force(double *f, double *h, parameters params) {
         for (int p=0; p<P; p++) {
             double a1 = 0.0; // summand A(n,p)
             double b1 = 0.0; // summand B(n,p)
-            
+            int n_max = N-1;
+
             a1 = P/beta * (h[tup2ind(n, p+1, N, P)] + h[tup2ind(n, p-1, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
-			switch(n) {
-				case 0:
-					b1 = beta * v0 * v0/P * (h[tup2ind(1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
-					break;
-				
-				case N-1:
-					b1 = beta * v0 * v0/P * (h[tup2ind(N-2, p, N, P)] - h[tup2ind(N-1, p, N, P)]);
-					break;
-				
-				default:
-					b1 = beta * v0 * v0/P * (h[tup2ind(n+1, p, N, P)] + h[tup2ind(n-1, p, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
-			}
+			if (n==0) {
+				b1 = beta * v0 * v0/P * (h[tup2ind(1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
+            } else if (n==N-1) {
+                b1 = beta * v0 * v0/P * (h[tup2ind(N-2, p, N, P)] - h[tup2ind(N-1, p, N, P)]);
+            } else {
+                b1 = beta * v0 * v0/P * (h[tup2ind(n+1, p, N, P)] + h[tup2ind(n-1, p, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
+            }
             f[tup2ind(n, p, N, P)]= a1 + b1;
         }
     }
@@ -95,7 +93,7 @@ double hamiltonian(double *p, double *h, parameters params) {
     output:
         double H_out: the hamiltonian of the system according to eq. (10)
     */
-    unsigned int size = params.N*param.P;
+    unsigned int size = params.N*params.P;
     double H_out = 0.0;
     for (unsigned int i=0; i<size; i++) {
         H_out += p[i]*p[i];
@@ -113,7 +111,7 @@ void heat_bath(double *p, gsl_rng * r, parameters params) {
     output:
         void
     */
-    unsigned int size = params.N*param.P;
+    unsigned int size = params.N*params.P;
     for (unsigned int i=0; i<size; i++) {
         p[i] = gsl_ran_gaussian(r, 1.0);
     }

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "steps.h"
 #include "structs.h"
 #include "utils.h"
 #include "init_config.h"
@@ -26,8 +27,8 @@ int main() {
     double *p = malloc(params.N*params.P*sizeof(double));
     double *p_out = malloc(params.N*params.P*sizeof(double));
 
-    
-    
+
+
     for (unsigned int m=10; m<=max_M; m+=10) {
         params.M = m; // update the number of leapfrog steps
         init_zero(h, params); // initialize the configuration to zero
@@ -36,7 +37,7 @@ int main() {
 
         step_md(p, h, params); // perform the md simulation
         ham = hamiltonian(p, h, params) - ham;
-        printf("tau = %e, delta_H = %e\n", 1/float(m), ham);
+        printf("tau = %e, delta_H = %e\n", 1/(float)m, ham);
     }
     printf("Test completed!\n");
 

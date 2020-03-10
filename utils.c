@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 unsigned int tup2ind(unsigned int n, int p, unsigned int N, unsigned int P) {
     /*
