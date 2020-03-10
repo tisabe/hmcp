@@ -67,7 +67,7 @@ void force(double *f, double *h, parameters params) {
             double b1 = 0.0; // summand B(n,p)
             
             a1 = P/beta * (h[tup2ind(n, p+1, N, P)] + h[tup2ind(n, p-1, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
-            }
+            
             if (n==0) {
                 b1 = beta * v0 * v0/P * (h[tup2ind(1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
             }
