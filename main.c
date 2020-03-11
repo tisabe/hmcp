@@ -27,7 +27,7 @@ int main(int argc, char *arv[]) {
 
     double *h = malloc(params.size*sizeof(double));
     double *p = malloc(params.size*sizeof(double));
-    int *acceptance = malloc(time*sizeof(int));
+    int *acceptance = malloc(time_max*sizeof(int));
 
     init_config_rng(h, 42, params);
     
