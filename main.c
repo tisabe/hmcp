@@ -41,9 +41,9 @@ int main(int argc, char *argv[]) {
         acceptance[time] = step_mc(p, h, r, params);
 
 	if (acceptance[time]==1){
-        	printf("step %d was accepted", time);
+        	printf("step %d was accepted \n", time);
 	} else if (acceptance[time]==0){
- 		printf("step %d got not accepted", time);
+ 		printf("step %d got not accepted \n", time);
 	}
     }
 
