@@ -4,18 +4,25 @@
 #include "structs.h"
 #include "utils.h"
 #include "init_config.h"
+#include "steps.h"
 
 
-int main() {
-    
-    int time_max = 50;
+int main(int argc, char *arv[]) {
+
+    if(argc!=6)
+   {
+      printf("Usage: <time_max> <N> <P> <M> <v0> <beta> \n\n");
+      exit(-1);
+   }
+
+    int time_max = atoi(argv[0]);
 
     parameters params;
-    params.M = 100;
-    params.N = 10;
-    params.v0 = 0.2;
-    params.beta = 0.7;
-    params.P = 50;
+    params.N = atoi(argv[1]);
+    params.P = atoi(argv[2]);
+    params.M = atoi(argv[3]);
+    params.v0 = atof(argv[4]);
+    params.beta = atof(argv[5]);
     params.size = params.P * params.N;
 
     double *h = malloc(params.size*sizeof(double));
