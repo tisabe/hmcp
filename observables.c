@@ -11,7 +11,7 @@ double potential_energy(double *h, parameters params) {
 
     for (int p=0; p<params.P; p++) {
         V += params.v0 * params.v0 / 2 *(h[tup2ind(1,p,params.N,params.P)]*h[tup2ind(1,p,params.N,params.P)]);
-        for (int n=0; n<params.N) {
+        for (int n=0; n<params.N; n++) {
             V += (h[tup2ind(n,p,params.N,params.P)]-h[tup2ind(n-1,p,params.N,params.P)]) * (h[tup2ind(n,p,params.N,params.P)]-h[tup2ind(n-1,p,params.N,params.P)]);
         }
     }
