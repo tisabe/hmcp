@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 
     double *h = malloc(params.size*sizeof(double));
     double *p = malloc(params.size*sizeof(double));
+    double *potential = malloc(time_max*sizeof(double));
     int *acceptance = malloc(time_max*sizeof(int));
 
     init_config_rng(h, 42, params);
@@ -35,7 +36,7 @@ int main(int argc, char *argv[]) {
 	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set(r, time); //use time as seed
 
-
+	potential[time] = potential_energy(h, params)
 	heat_bath(p, r, params);
         
         acceptance[time] = step_mc(p, h, r, params);
