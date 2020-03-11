@@ -19,9 +19,7 @@ int main() {
     params.size = params.P * params.N;
 
     double *h = malloc(params.size*sizeof(double));
-    double *h_out = malloc(params.size*sizeof(double));
     double *p = malloc(params.size*sizeof(double));
-    double *p_out = malloc(params.size*sizeof(double));
     int *acceptance = malloc(time*sizeof(int));
 
     init_config_rng(h, 42, params);
@@ -35,12 +33,15 @@ int main() {
         
         acceptance[time] = step_mc(p, h, r, params);
 
-		if (acceptance[time]==1){
-        		printf("step %e got accepted", time);
-		} elseif (acceptance[time]==0){
- 			printf("step %e got not accepted", time);
-		}
+	if (acceptance[time]==1){
+        	printf("step %d was accepted", time);
+	} else if (acceptance[time]==0){
+ 		printf("step %d got not accepted", time);
+	}
     }
 
     return 0;
+    free(h);
+    free(p);
+    free(acceptance);
 }
