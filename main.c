@@ -9,20 +9,20 @@
 
 int main(int argc, char *arv[]) {
 
-    if(argc!=6)
+    if(argc!=7)
    {
       printf("Usage: <time_max> <N> <P> <M> <v0> <beta> \n\n");
       exit(-1);
    }
 
-    int time_max = atoi(argv[0]);
+    int time_max = atoi(argv[1]);
 
     parameters params;
-    params.N = atoi(argv[1]);
-    params.P = atoi(argv[2]);
-    params.M = atoi(argv[3]);
-    params.v0 = atof(argv[4]);
-    params.beta = atof(argv[5]);
+    params.N = atoi(argv[2]);
+    params.P = atoi(argv[3]);
+    params.M = atoi(argv[4]);
+    params.v0 = atof(argv[5]);
+    params.beta = atof(argv[6]);
     params.size = params.P * params.N;
 
     double *h = malloc(params.size*sizeof(double));
