@@ -45,3 +45,30 @@ void vec_scalar_vec_add(double *res, double s, double *v, double *w, long int L)
         res[i] = s*v[i] + w[i];
     }
 }
+
+void print_file(double *v_pot, double *delta_h, int *acceptance, int num_steps, parameters params) {
+    /* This function prints an output file with the parameters and observables of an MC chain
+
+    input:
+        double *v_pot: array with history of potential energies of the MC chain (size: num_steps)
+        double *delta_h: array with history of displacemnts of the MC chain (size: num_steps)
+        int *acceptance: array with history of acceptance of the MC chain (size: num_steps)
+        int num_steps: number of steps of the chain
+        parameters params: struct with parameters
+    output:
+        void
+
+    */
+    FILE *obs_file;
+    char str[80];
+    //char str2[80];
+    sprintf(str, "outputs/out_M_%u_P_%u.txt", params.M, params.P);
+    obs_file = fopen(str,"w");
+    fprintf(obs_file, "N\tP\tM\tv0\tbeta\tnum_steps\n");
+    fprintf(obs_file, "%u\t%u\t%u\t%e\t%e\t%u\n", params.N, params.P, params.M, params.v0, params.beta, num_steps);
+    for(unsigned int i = 0; i < num_steps; i++) {
+        fprintf(obs_file, "%u\t%e\t%e\t%d\n", i, v_pot[i], delta_h[i], acceptance[i]);
+    }
+
+    fclose(obs_file);
+}

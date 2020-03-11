@@ -204,4 +204,6 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
         // the new energy is smaller, accept the step
         return 1;
     }
+    free(p0);
+    free(h0);
 }
