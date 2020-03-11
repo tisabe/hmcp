@@ -4,23 +4,30 @@
 #include "structs.h"
 #include "utils.h"
 #include "init_config.h"
+#include "steps.h"
 
 
-int main() {
-    
-    int time_max = 50;
+int main(int argc, char *argv[]) {
+
+    if(argc!=7)
+   {
+      printf("Usage: <time_max> <N> <P> <M> <v0> <beta> \n\n");
+      exit(-1);
+   }
+
+    int time_max = atoi(argv[1]);
 
     parameters params;
-    params.M = 100;
-    params.N = 10;
-    params.v0 = 0.2;
-    params.beta = 0.7;
-    params.P = 50;
+    params.N = atoi(argv[2]);
+    params.P = atoi(argv[3]);
+    params.M = atoi(argv[4]);
+    params.v0 = atof(argv[5]);
+    params.beta = atof(argv[6]);
     params.size = params.P * params.N;
 
     double *h = malloc(params.size*sizeof(double));
     double *p = malloc(params.size*sizeof(double));
-    int *acceptance = malloc(time*sizeof(int));
+    int *acceptance = malloc(time_max*sizeof(int));
 
     init_config_rng(h, 42, params);
     
@@ -34,9 +41,9 @@ int main() {
         acceptance[time] = step_mc(p, h, r, params);
 
 	if (acceptance[time]==1){
-        	printf("step %d was accepted", time);
+        	printf("step %d was accepted \n", time);
 	} else if (acceptance[time]==0){
- 		printf("step %d got not accepted", time);
+ 		printf("step %d got not accepted \n", time);
 	}
     }
 
