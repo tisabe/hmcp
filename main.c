@@ -36,10 +36,11 @@ int main(int argc, char *argv[]) {
 	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set(r, time); //use time as seed
 
-	potential[time] = potential_energy(h, params)
 	heat_bath(p, r, params);
         
         acceptance[time] = step_mc(p, h, r, params);
+
+	potential[time] = potential_energy(h, params);
 
 	if (acceptance[time]==1){
         	printf("step %d was accepted \n", time);
@@ -49,7 +50,9 @@ int main(int argc, char *argv[]) {
     }
 
     return 0;
+
     free(h);
     free(p);
+    free(potential);
     free(acceptance);
 }
