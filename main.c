@@ -31,9 +31,11 @@ int main(int argc, char *argv[]) {
     double *potential = malloc(time_max*sizeof(double));
     int *acceptance = malloc(time_max*sizeof(int));
 
+    int acceptance_sum = 0;
+
     init_config_rng(h, 42, params);
 
-    for (unsigned int time=1; time<=time_max; time++) {
+    for (int time=1; time<=time_max; time++) {
 	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set(r, time); //use time as seed
 
@@ -48,7 +50,11 @@ int main(int argc, char *argv[]) {
 	} else if (acceptance[time]==0){
  		printf("step %d got not accepted \n", time);
 	}
+	acceptance_sum += acceptance[time];
     }
+
+    double acceptance_rate = acceptance_sum * 1.0/time_max;
+    printf("the acceptance rate is %d \n", acceptance_rate);
 
     free(h);
     free(p);
