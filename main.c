@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "init_config.h"
 #include "steps.h"
+#include "observables.h"
 
 
 int main(int argc, char *argv[]) {
@@ -31,13 +32,13 @@ int main(int argc, char *argv[]) {
     int *acceptance = malloc(time_max*sizeof(int));
 
     init_config_rng(h, 42, params);
-    
+
     for (unsigned int time=1; time<=time_max; time++) {
 	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
 	gsl_rng_set(r, time); //use time as seed
 
 	heat_bath(p, r, params);
-        
+
         acceptance[time] = step_mc(p, h, r, params);
 
 	potential[time] = potential_energy(h, params);
@@ -49,10 +50,10 @@ int main(int argc, char *argv[]) {
 	}
     }
 
-    return 0;
-
     free(h);
     free(p);
     free(potential);
     free(acceptance);
+
+    return 0;
 }

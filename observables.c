@@ -30,8 +30,8 @@ double potential_energy(double *h, parameters params) {
 
 
 
-int main(int argc, char const *argv[]) {
-  /* code */
+/*int main(int argc, char const *argv[]) {
+  // code
   printf("%s\n","Apfel" );
   return 0;
-}
+}*/

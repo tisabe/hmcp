@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <limits.h>
 
+#include "structs.h"
+
 unsigned int tup2ind(unsigned int n, int p, unsigned int N, unsigned int P) {
     /*
     this function converts a 2 tupel of indices to a combined index, to call
