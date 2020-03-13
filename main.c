@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     }
 
     double acceptance_rate = acceptance_sum * 1.0/time_max;
-    printf("the acceptance rate is %d \n", acceptance_rate);
+    printf("the acceptance rate is %f \n", acceptance_rate);
 
     free(h);
     free(p);
