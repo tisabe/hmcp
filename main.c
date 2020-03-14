@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     if(argc!=7)
    {
       printf("Usage guidelines: <time_max> <N> <P> <M> <v0> <beta> \n");
-      printf("If the supplied value for <M> is 0, you will be promted to enter a target value for the acceptance rate and the corresponding M will be found by a bisection algorithm.\n\n");
+      printf("If <M> = 0, you will be promted to enter a target value for the acceptance rate. The corresponding M will be found by a bisection algorithm.\n\n");
       exit(-1);
    }
 
@@ -41,31 +41,32 @@ int main(int argc, char *argv[]) {
 
     init_config_rng(h, 42, params);
 
-    for (int time=1; time<=time_max; time++) {
-	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
-	gsl_rng_set(r, time); //use time as seed
+    printf("Time\tAcc.\tAcc. rate\tV_beta\n");
 
-	heat_bath(p, r, params);
+    FILE *output_file;
+    output_file = fopen("main_output.txt","w");
+    //fprintf(output_file,"Time\tAcc.\tAcc. rate\tV_beta\n");
+
+    for (int time=1; time<=time_max; time++) {
+	    gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
+	    gsl_rng_set(r, time); //use time as seed
+
+	    heat_bath(p, r, params);
 
         acceptance[time] = step_mc(p, h, r, params);
 
-	potential[time] = potential_energy(h, params);
+	    potential[time] = potential_energy(h, params);
 
-	if (acceptance[time]==1){
-        	//printf("step %d was accepted \n", time);
-	} else if (acceptance[time]==0){
- 		printf("step %d got not accepted \n", time);
-	}
-	acceptance_sum += acceptance[time];
+	    acceptance_sum += acceptance[time];
+        if (time % 50 == 0){ printf("%i\t%i\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/time, potential_energy(h, params)); }
+        fprintf(output_file, "%i\t%i\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/time, potential_energy(h, params));
     }
-
-    double acceptance_rate = acceptance_sum * 1.0/time_max;
-    printf("the acceptance rate is %f \n", acceptance_rate);
 
     free(h);
     free(p);
     free(potential);
     free(acceptance);
+    fclose(output_file);
 
     return 0;
 }

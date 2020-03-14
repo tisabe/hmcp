@@ -15,16 +15,15 @@ double potential_energy(double *h, parameters params) {
   output:
       double V: potential energy of the system
   */
-    double V;
-    V = 0;
+    double V = 0;
 
     for (int p=0; p<params.P; p++) { //summation over all p
-        V += params.v0 * params.v0 / 2 *(h[tup2ind(1,p,params.N,params.P)]*h[tup2ind(1,p,params.N,params.P)]); //
-        for (int n=0; n<params.N; n++) {
+        V += (h[tup2ind(1,p,params.N,params.P)]*h[tup2ind(1,p,params.N,params.P)]); //
+        for (int n=1; n<params.N; n++) {
             V += (h[tup2ind(n,p,params.N,params.P)]-h[tup2ind(n-1,p,params.N,params.P)]) * (h[tup2ind(n,p,params.N,params.P)]-h[tup2ind(n-1,p,params.N,params.P)]);
         }
     }
-    V = V/ params.P;
+    V *= params.v0 * params.v0 / (2 * params.P);
     return V;
 }
 
