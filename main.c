@@ -13,7 +13,8 @@ int main(int argc, char *argv[]) {
 
     if(argc!=7)
    {
-      printf("Usage: <time_max> <N> <P> <M> <v0> <beta> \n\n");
+      printf("Usage guidelines: <time_max> <N> <P> <M> <v0> <beta> \n");
+      printf("If the supplied value for <M> is 0, you will be promted to enter a target value for the acceptance rate and the corresponding M will be found by a bisection algorithm.\n\n");
       exit(-1);
    }
 
@@ -27,7 +28,9 @@ int main(int argc, char *argv[]) {
     params.beta = atof(argv[6]);
     params.size = params.P * params.N;
 
-    if (params.M == 0) { params.M = find_optimal_M(1024, time_max); }
+    if (params.M == 0) {
+        params.M = find_optimal_M(time_max, params);
+    }
 
     double *h = malloc(params.size*sizeof(double));
     double *p = malloc(params.size*sizeof(double));
@@ -49,7 +52,7 @@ int main(int argc, char *argv[]) {
 	potential[time] = potential_energy(h, params);
 
 	if (acceptance[time]==1){
-        	printf("step %d was accepted \n", time);
+        	//printf("step %d was accepted \n", time);
 	} else if (acceptance[time]==0){
  		printf("step %d got not accepted \n", time);
 	}

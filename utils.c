@@ -74,8 +74,3 @@ void print_file(double *v_pot, double *delta_h, int *acceptance, int num_steps, 
 
     fclose(obs_file);
 }
-
-int isPowerOfTwo(int n){
-    while (n % 2 == 0){ n /= 2; }
-    if (n == 1){ return 1; }else{ return 0; }
-}
