@@ -13,3 +13,7 @@ observables: utils.c
 optimal_m: utils.c init_config.c steps.c observables.c
 	gcc optimal_m.c -lm init_config.c utils.c steps.c observables.c -L/usr/local/lib -lgsl -o optimal_m.exe
 	./optimal_m.exe
+
+heatbath_test: steps.c
+	gcc heatbath_test.c -lm steps.c -lgsl -o heatbath_test.exe
+	./heatbath_test.exe
