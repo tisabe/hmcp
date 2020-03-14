@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <gsl/gsl_rng.h>
 
 #include "structs.h"
 #include "utils.h"
