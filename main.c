@@ -6,6 +6,7 @@
 #include "init_config.h"
 #include "steps.h"
 #include "observables.h"
+#include "optimal_m.h"
 
 
 int main(int argc, char *argv[]) {
@@ -25,6 +26,8 @@ int main(int argc, char *argv[]) {
     params.v0 = atof(argv[5]);
     params.beta = atof(argv[6]);
     params.size = params.P * params.N;
+
+    if (params.M == 0) { params.M = find_optimal_M(1024, time_max); }
 
     double *h = malloc(params.size*sizeof(double));
     double *p = malloc(params.size*sizeof(double));

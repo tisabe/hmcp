@@ -9,3 +9,7 @@ test_md: utils.c init_config.c steps.c
 observables: utils.c
 	gcc observables.c -lm utils.c -o observables.exe
 	./observables.exe
+
+optimal_m: utils.c init_config.c steps.c observables.c
+	gcc optimal_m.c -lm init_config.c utils.c steps.c observables.c -L/usr/local/lib -lgsl -o optimal_m.exe
+	./optimal_m.exe
