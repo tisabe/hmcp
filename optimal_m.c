@@ -39,8 +39,10 @@ static double acceptanceRate(int time_max, parameters params) {                 
     return (double) acceptance_sum / time_max;
 }
 
-int find_optimal_M(int time_max, parameters params) {
+int find_optimal_M(parameters params) {
     printf("Starting algorithm to find ideal M...\n");
+
+    int time_max = 1000;
 
     double ar_tv;                                                               // Set acceptance rate target value
     printf("Please enter the acceptance rate target value: ");
@@ -89,3 +91,4 @@ int find_optimal_M(int time_max, parameters params) {
     printf(" terminated at M = %i, acceptance = %lf\n\n", params.M, acc_rate);
 
     return params.M;
+}

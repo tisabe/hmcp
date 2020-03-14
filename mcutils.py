@@ -16,9 +16,12 @@ def importObsData(filepath):
     with open(filepath,'r') as obsfile:
         for line in obsfile:
             obsData.append(line.strip().split('\t'))
+        parameters = [obsData[0],obsData[1]]
+        del obsData[0]
+        del obsData[0]
         for j in range(len(obsData)):
             obsData[j] = [float(obsData[j][i]) for i in range(len(obsData[0]))]
-    return np.array(obsData).T
+    return [parameters,np.array(obsData).T]
 
 def makePlot(data, y_label):
     plt.plot(data[0],data[1])

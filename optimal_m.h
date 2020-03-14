@@ -3,6 +3,6 @@
 
 #include "structs.h"
 
-int find_optimal_M(int time_max, parameters params);
+int find_optimal_M(parameters params);
 
 #endif
