@@ -68,6 +68,7 @@ void print_file(double *v_pot, double *delta_h, int *acceptance, int num_steps, 
     obs_file = fopen(str,"w");
     fprintf(obs_file, "N\tP\tM\tv0\tbeta\tnum_steps\n");
     fprintf(obs_file, "%u\t%u\t%u\t%e\t%e\t%u\n", params.N, params.P, params.M, params.v0, params.beta, num_steps);
+    fprintf(obs_file, "i\tV_beta\th^2\tAcc.\n");
     for(unsigned int i = 0; i < num_steps; i++) {
         fprintf(obs_file, "%u\t%e\t%e\t%d\n", i, v_pot[i], delta_h[i], acceptance[i]);
     }

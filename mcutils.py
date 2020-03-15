@@ -17,8 +17,7 @@ def importObsData(filepath):
         for line in obsfile:
             obsData.append(line.strip().split('\t'))
         parameters = [obsData[0],obsData[1]]
-        del obsData[0]
-        del obsData[0]
+        del obsData[0:3]
         for j in range(len(obsData)):
             obsData[j] = [float(obsData[j][i]) for i in range(len(obsData[0]))]
     return [parameters,np.array(obsData).T]
