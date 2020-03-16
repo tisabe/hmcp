@@ -28,7 +28,8 @@ int main() {
     double *p_out = malloc(params.N*params.P*sizeof(double));
 
 
-
+	FILE *obs_file;
+	obs_file = fopen("outputs/test_md_out.txt","w");
     for (unsigned int m=10; m<=max_M; m+=10) {
         params.M = m; // update the number of leapfrog steps
         init_zero(h, params); // initialize the configuration to zero
@@ -38,7 +39,13 @@ int main() {
         step_md(p, h, params); // perform the md simulation
         ham = hamiltonian(p, h, params) - ham;
         printf("tau = %e, delta_H = %e\n", 1/(float)m, ham);
+	fprintf(obs_file, "%e\t%e\n", 1/(float)m, ham);
     }
+    fclose(obs_file);
+    free(h);
+    free(h_out);
+    free(p);
+    free(p_out);
     printf("Test completed!\n");
 
     return 0;
