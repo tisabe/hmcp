@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     printf("Time\tAcc.\tAcc. rate\tV_beta\th^2\n");
 
-    for (int time=1; time<=time_max; time++) {
+    for (int time=0; time<time_max; time++) {
 	    gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
 	    gsl_rng_set(r, time); //use time as seed
 
