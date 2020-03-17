@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
         acceptance[time] = step_mc(p, h, r, params);
 
 	    potential[time] = potential_energy(h, params);
-        sq_fluct[time] = square_fluctuation(h, params);
+        sq_fluct[time] = hamiltonian(h, p, params);
 
 	    acceptance_sum += acceptance[time];
         if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/time, potential[time], sq_fluct[time]); }
