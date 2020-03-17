@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
 
     int acceptance_sum = 0;
 
-    init_config_rng(h, 42, params);
+    //init_config_rng(h, 42, params);
+    init_zero(h, params);
 
     printf("Time\tAcc.\tAcc. rate\tV_beta\th^2\n");
 
@@ -59,10 +60,10 @@ int main(int argc, char *argv[]) {
         acceptance[time] = step_mc(p, h, r, params);
 
 	    potential[time] = potential_energy(h, params);
-        sq_fluct[time] = hamiltonian(h, p, params);
+        sq_fluct[time] = hamiltonian(h, p, params); //square_fluctuation(h, params);
 
 	    acceptance_sum += acceptance[time];
-        if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/time, potential[time], sq_fluct[time]); }
+        if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time]); }
     }
 
     print_file(potential, sq_fluct, acceptance, time_max, params);

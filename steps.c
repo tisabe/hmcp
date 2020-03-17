@@ -182,11 +182,11 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
 
 	step_md(p, h, params);
 
-	double Delta_H= hamiltonian(p, h, params) - H_0;
+	double Delta_H = hamiltonian(p, h, params) - H_0;
 
 	if (Delta_H >= 0) {
         // the new energy is higher so the probability of accepting the higher energy needs to be calculated
-		double prob = exp(-1*Delta_H);
+		double prob = exp(-1*Delta_H*params.beta);
 
 		if (gsl_rng_get (r)/r_max > prob) {
             // the random number is higher than the calculated probability, reject the step
