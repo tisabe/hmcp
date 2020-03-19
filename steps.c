@@ -186,24 +186,30 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
 
 	if (Delta_H >= 0) {
         // the new energy is higher so the probability of accepting the higher energy needs to be calculated
-		double prob = exp(-1*Delta_H*params.beta);
+		double prob = exp(-1*Delta_H);
 
-		if (gsl_rng_get (r)/r_max > prob) {
-            // the random number is higher than the calculated probability, reject the step
-            // copy the old configuration into the "output"
-            memcpy(p, p0, size*sizeof(double));
-			memcpy(h, h0, size*sizeof(double));
-			return 0;
+		if (gsl_rng_uniform(r)> prob) {
+            	// the random number is higher than the calculated probability, reject the step
+            	// copy the old configuration into the "output"
+            	memcpy(p, p0, size*sizeof(double));
+		memcpy(h, h0, size*sizeof(double));
+		free(p0);
+  		free(h0);
+		return 0;
 		}
-        else {
-            // the random number is smaller, accept the step
-            return 1;
-        }
+
+        	else {
+            	// the random number is smaller, accept the step
+	    	free(p0);
+  	    	free(h0);
+            	return 1;
+        	}
 	}
-    else {
+
+    	else {
         // the new energy is smaller, accept the step
+	free(p0);
+  	free(h0);
         return 1;
     }
-    free(p0);
-    free(h0);
 }
