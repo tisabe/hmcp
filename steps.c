@@ -63,14 +63,12 @@ void force(double *f, double *h, parameters params) {
     unsigned int P = params.P;
     double v0 = params.v0;
     double beta = params.beta;
-    unsigned int size = N * P;
-
+    
     for (int n=0; n<N; n++) {
         for (int p=0; p<P; p++) {
             double a1 = 0.0; // summand A(n,p)
             double b1 = 0.0; // summand B(n,p)
-            int n_max = N-1;
-
+            
             a1 = P/beta * (h[tup2ind(n, p+1, N, P)] + h[tup2ind(n, p-1, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
 			if (n==0) {
 				b1 = beta * v0 * v0/P * (h[tup2ind(1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
@@ -129,8 +127,6 @@ void step_md(double *p, double *h, parameters params) {
     output:
         void
     */
-    unsigned int N = params.N;
-    unsigned int P = params.P;
     unsigned int size = params.size;
     unsigned int M = params.M;
 
@@ -168,7 +164,6 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
 
 	//to do: needs to give back "acceptance" to calculate the overall acceptance
 
-	double r_max = gsl_rng_max(r);
 	double H_0 = hamiltonian(p, h, params);
 	unsigned int N = params.N;
     unsigned int P = params.P;

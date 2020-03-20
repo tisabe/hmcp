@@ -1,5 +1,5 @@
 main: utils.c init_config.c steps.c observables.c optimal_m.c
-	gcc main.c -lm init_config.c utils.c steps.c observables.c optimal_m.c -L/usr/local/lib -lgsl -o main.exe
+	gcc main.c -lm init_config.c utils.c steps.c observables.c optimal_m.c -L/usr/local/lib -lgsl -O3 -Wall -o main.exe
 	./main.exe
 
 test_md: utils.c init_config.c steps.c
