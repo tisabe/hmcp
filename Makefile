@@ -17,3 +17,7 @@ optimal_m: utils.c init_config.c steps.c observables.c
 heatbath_test: steps.c utils.c
 	gcc heatbath_test.c -lm steps.c utils.c -lgsl -o heatbath_test.exe
 	./heatbath_test.exe
+
+tup2ind_test: utils.c
+	gcc tup2ind_test.c -lm utils.c -o tup2ind_test.exe
+	./tup2ind_test.exe
