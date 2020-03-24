@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "steps.h"
 #include "structs.h"
+#include "observables.h"
 
 int main(){
   parameters params;
@@ -14,19 +15,17 @@ int main(){
   params.v0 = 0.2;
 
 
-  double *h = malloc(size*sizeof(double));
-  double *f = malloc(size*sizeof(double));
+  double *h = malloc(params.size*sizeof(double));
   for (int i=0; i<params.size; i++){
     h[i]=2;
   }
 
   double action_of_2 = action(h,params);
-  double force_of_2 = force(f,h,params);
+  double potential_of_2 = potential_energy(h,params);
 
-  printf("\n action: %d \t force: %d \n", action_of_2, force_of_2);
+  printf("\n action: %d \t potential: %d \n", action_of_2, potential_of_2);
 
   free(h);
-  free(f);
 
   return 0;
 }
