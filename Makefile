@@ -21,3 +21,7 @@ heatbath_test: steps.c utils.c
 tup2ind_test: utils.c
 	gcc tup2ind_test.c -lm utils.c -o tup2ind_test.exe
 	./tup2ind_test.exe
+
+configuration_test: steps.c utils.c
+		gcc configuration_test.c -lm steps.c utils.c -L/usr/local/lib -lgsl -o configuration_test.exe
+		./configuration_test.exe
