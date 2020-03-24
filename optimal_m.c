@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "structs.h"
 #include "utils.h"
@@ -81,7 +82,7 @@ int find_optimal_M(parameters params) {
     params.M = M_ub;
     double acc_rate_u = acceptanceRate(time_max, params);
 
-    if (abs(acc_rate_l - ar_tv) < abs(acc_rate_u - ar_tv)){                     // If acc_rate of M_lb closer to target value, set this as M...
+    if (fabs(acc_rate_l - ar_tv) < fabs(acc_rate_u - ar_tv)){                     // If acc_rate of M_lb closer to target value, set this as M...
         params.M = M_lb;
         acc_rate = acc_rate_l;
     }else{                                                                      // ...otherwise use M_ub as M
