@@ -21,9 +21,9 @@ static double acceptanceRate(int time_max, parameters params) {                 
 
     double *h = malloc(params.size*sizeof(double));
     double *p = malloc(params.size*sizeof(double));
-
-    init_config_rng(h, 42, params);
+    
     gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
+    init_config_rng(h, r, params);
 
     int acceptance_sum = 0;
     int accepted = 0;

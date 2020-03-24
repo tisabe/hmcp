@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
     gsl_rng_set(r, 42);
 
-    init_config_rng(h, gsl_rng * r, params);
+    init_config_rng(h, r, params);
     //init_zero(h, params);
 
     printf("Time\tAcc.\tAcc. rate\tV_beta\th^2\n");
