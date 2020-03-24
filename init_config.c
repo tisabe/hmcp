@@ -8,18 +8,18 @@
 this function creates an array of length "size" with random entries between 0 and 1.
 **********************************************************************************/
 
-void init_config_rng(double *configuration, unsigned long int seed, parameters params){
+void init_config_rng(double *configuration, gsl_rng * r, parameters params){
 	long int n= params.N;
 	long int p= params.P;
 	long int size= n * p;
-	gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
-	gsl_rng_set(r, seed); // set the seed for the rng
+	//gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
+	//gsl_rng_set(r, seed); // set the seed for the rng
 	//double r_max = gsl_rng_max(r);
 
     	for (int i=0; i<size; i++) {
 		configuration[i] = gsl_rng_uniform(r);
     	}
-    	gsl_rng_free(r);
+    	//gsl_rng_free(r);
 }
 
 void init_zero(double *h, parameters params) {

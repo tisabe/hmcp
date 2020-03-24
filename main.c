@@ -46,14 +46,15 @@ int main(int argc, char *argv[]) {
 
     int acceptance_sum = 0;
 
-    //init_config_rng(h, 42, params);
-    init_zero(h, params);
+    gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
+    gsl_rng_set(r, 42);
+
+    init_config_rng(h, gsl_rng * r, params);
+    //init_zero(h, params);
 
     printf("Time\tAcc.\tAcc. rate\tV_beta\th^2\n");
 
     for (int time=0; time<time_max; time++) {
-	    gsl_rng * r = gsl_rng_alloc (gsl_rng_taus);
-	    gsl_rng_set(r, time); //use time as seed
 
 	    heat_bath(p, r, params);
 
@@ -73,7 +74,7 @@ int main(int argc, char *argv[]) {
     free(potential);
     free(sq_fluct);
     free(acceptance);
-
+    gsl_rng_free (r);
     free(delta_h);
 
     return 0;
