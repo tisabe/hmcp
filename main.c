@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
     double *p = malloc(params.size*sizeof(double));
     double *potential = malloc(time_max*sizeof(double));
     double *sq_fluct = malloc(time_max*sizeof(double));
+    double *md_hamiltonian = malloc(time_max*sizeof(double));
     int *acceptance = malloc(time_max*sizeof(int));
 
     double *delta_h = malloc(time_max*sizeof(double));
@@ -52,19 +53,21 @@ int main(int argc, char *argv[]) {
     init_config_rng(h, r, params);
     //init_zero(h, params);
 
-    printf("Time\tAcc.\tAcc. rate\tV_beta\th^2\n");
+    printf("Time\tAcc.\tAcc. rate\tV_beta\th^2\t Hamiltonian\n");
 
     for (int time=0; time<time_max; time++) {
 
-	    heat_bath(p, r, params);
+	     heat_bath(p, r, params);
 
-        acceptance[time] = step_mc(p, h, r, params);
+       acceptance[time] = step_mc(p, h, r, params);
 
-	    potential[time] = potential_energy(h, params);
-        sq_fluct[time] = hamiltonian(h, p, params); //square_fluctuation(h, params);
+	     potential[time] = potential_energy(h, params);
+       sq_fluct[time] = square_fluctuation(h, params);
+       md_hamiltonian[time] = hamiltonian(h, p, params);
+
 
 	    acceptance_sum += acceptance[time];
-        if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time]); }
+        if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time], md_hamiltonian[time]); }
     }
 
     print_file(potential, sq_fluct, acceptance, time_max, params);
