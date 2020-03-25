@@ -23,7 +23,7 @@ int main(){
   double action_of_2 = action(h,params);
   double potential_of_2 = potential_energy(h,params);
 
-  printf("\n action: %d \t potential: %d \n", action_of_2, potential_of_2);
+  printf("\n action: %f \t potential: %f \n", action_of_2, potential_of_2);
 
   free(h);
 
