@@ -70,12 +70,13 @@ int main(int argc, char *argv[]) {
         if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time], md_hamiltonian[time]); }
     }
 
-    print_file(potential, sq_fluct, acceptance, time_max, params);
+    print_file(potential, sq_fluct, md_hamiltonian, acceptance, time_max, params);
 
     free(h);
     free(p);
     free(potential);
     free(sq_fluct);
+    free(md_hamiltonian);
     free(acceptance);
     gsl_rng_free (r);
     free(delta_h);
