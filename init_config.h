@@ -4,6 +4,6 @@
 #include "structs.h"
 
 void init_config_rng(double *configuration, gsl_rng * r, parameters params);
-void init_zero(double *h, parameters params);
+void init_zero(double *configuration, parameters params);
 
 #endif
