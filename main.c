@@ -57,17 +57,20 @@ int main(int argc, char *argv[]) {
 
     for (int time=0; time<time_max; time++) {
 
-	     heat_bath(p, r, params);
+       // generate a random p with heat bath
+       heat_bath(p, r, params);
 
+       // execute the md step and the mc step and return if the step is accepted or not
        acceptance[time] = step_mc(p, h, r, params);
 
-	     potential[time] = potential_energy(h, params);
+       // calculate observables
+       potential[time] = potential_energy(h, params);
        sq_fluct[time] = square_fluctuation(h, params);
        md_hamiltonian[time] = hamiltonian(h, p, params);
 
+       acceptance_sum += acceptance[time];
 
-	    acceptance_sum += acceptance[time];
-        if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time], md_hamiltonian[time]); }
+       if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time], md_hamiltonian[time]); }
     }
 
     print_file(potential, sq_fluct, md_hamiltonian, acceptance, time_max, params);
