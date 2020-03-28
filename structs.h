@@ -8,7 +8,7 @@ typedef struct parameters_tag {
     unsigned int N; // number of atoms
     unsigned int P; // number of path-integral divisions
     unsigned int M; // number of steps per MD integration
-    unsigned int size;
+    unsigned int size; // size of the full array used, N*P
     double v0;      // potential energy factor
     double beta;    // inverse thermal energy 1/(k_B*T)
 } parameters /*name to reference struct*/;

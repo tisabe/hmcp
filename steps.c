@@ -152,7 +152,11 @@ void step_md(double *p, double *h, parameters params) {
 
 int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
     /*
-    this function performs the metropolis step
+    this function performs the metropolis step, by:
+    1. calculating the initial hamiltonian
+    2. doing the molecular dynamics step
+    3. calculating the posterior hamiltonian
+    4. accepting the step with a probability depending on the difference between the hamiltonians
 
     input:
         double *p: conjugate momenta (N*P matrix)
@@ -175,8 +179,10 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
     memcpy(p0, p, size*sizeof(double));
     memcpy(h0, h, size*sizeof(double));
 
+    // perform the molecular dynamics step
 	step_md(p, h, params);
 
+    // calculate the difference between initial and posterior hamiltonian
 	double Delta_H = hamiltonian(p, h, params) - H_0;
 
 	if (Delta_H >= 0) {
@@ -187,24 +193,24 @@ int step_mc(double *p, double *h, gsl_rng * r, parameters params) {
             	// the random number is higher than the calculated probability, reject the step
             	// copy the old configuration into the "output"
             	memcpy(p, p0, size*sizeof(double));
-		memcpy(h, h0, size*sizeof(double));
-		free(p0);
-  		free(h0);
-		return 0;
+                memcpy(h, h0, size*sizeof(double));
+                free(p0);
+                free(h0);
+                return 0;
 		}
 
         	else {
             	// the random number is smaller, accept the step
-	    	free(p0);
-  	    	free(h0);
+                free(p0);
+                free(h0);
             	return 1;
         	}
 	}
 
     	else {
         // the new energy is smaller, accept the step
-	free(p0);
-  	free(h0);
+        free(p0);
+        free(h0);
         return 1;
     }
 }
