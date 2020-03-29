@@ -41,7 +41,7 @@ int main() {
         step_md(p, h, params); // perform the md simulation
         ham = hamiltonian(p, h, params) - ham;
         printf("tau = %e, delta_H = %e\n", 1/(float)m, ham);
-	fprintf(obs_file, "%e\t%e\n", 1/(float)m, ham);
+        fprintf(obs_file, "%e\t%e\n", 1/(float)m, ham);
     }
     fclose(obs_file);
     free(h);

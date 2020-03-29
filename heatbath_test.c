@@ -11,7 +11,6 @@ This code generates the conjugate momenta to check if they have a gaussian distr
 
 int main() {
     printf("Generating momenta\n");
-    int max_M = 2000;
     parameters params;
     params.N = 10;
     params.v0 = 0.2;
@@ -36,6 +35,8 @@ int main() {
 
     free(p0);
     free(p1);
+
+    printf("File saved!");
 
     return 0;
 }
