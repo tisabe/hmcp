@@ -39,9 +39,3 @@ double square_fluctuation(double *h, parameters params) {                       
     H /= params.P;
     return H;
 }
-
-/*int main(int argc, char const *argv[]) {
-  // code
-  printf("%s\n","Apfel" );
-  return 0;
-}*/
