@@ -1,0 +1,2 @@
+This folder (outputs) is used to save the outputs of the main file, 
+while sample outputs as reference are saved in sample_outputs.
