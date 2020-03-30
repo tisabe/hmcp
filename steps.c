@@ -63,12 +63,12 @@ void force(double *f, double *h, parameters params) {
     unsigned int P = params.P;
     double v0 = params.v0;
     double beta = params.beta;
-    
+
     for (int n=0; n<N; n++) {
         for (int p=0; p<P; p++) {
             double a1 = 0.0; // summand A(n,p)
             double b1 = 0.0; // summand B(n,p)
-            
+
             a1 = P/beta * (h[tup2ind(n, p+1, N, P)] + h[tup2ind(n, p-1, N, P)] - 2 * h[tup2ind(n, p, N, P)]);
 			if (n==0) {
 				b1 = beta * v0 * v0/P * (h[tup2ind(1, p, N, P)] - 2 * h[tup2ind(0, p, N, P)]);
@@ -113,7 +113,7 @@ void heat_bath(double *p, gsl_rng * r, parameters params) {
     */
     unsigned int size = params.N*params.P;
     for (unsigned int i=0; i<size; i++) {
-        p[i] = gsl_ran_gaussian(r, 1.0);
+        p[i] = gsl_ran_gaussian(r, 1.0/3);
     }
 }
 
