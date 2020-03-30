@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
     double *p = malloc(params.size*sizeof(double));
     double *potential = malloc(time_max*sizeof(double));
     double *sq_fluct = malloc(time_max*sizeof(double));
+    double *fluct = malloc(time_max*sizeof(double));
     double *md_hamiltonian = malloc(time_max*sizeof(double));
     int *acceptance = malloc(time_max*sizeof(int));
 
@@ -66,19 +67,21 @@ int main(int argc, char *argv[]) {
        // calculate observables
        potential[time] = potential_energy(h, params);
        sq_fluct[time] = square_fluctuation(h, params);
+       fluct[time] = fluctuation(h, params);
        md_hamiltonian[time] = hamiltonian(h, p, params);
 
        acceptance_sum += acceptance[time];
 
-       if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time], md_hamiltonian[time]); }
+       if (time % 100 == 0){ printf("%i\t%i\t%lf\t%lf\t%lf\t%lf\t%lf\n", time, acceptance[time], (double) acceptance_sum/(time+1), potential[time], sq_fluct[time], md_hamiltonian[time], fluct[time]); }
     }
 
-    print_file(potential, sq_fluct, md_hamiltonian, acceptance, time_max, params);
+    print_file(potential, sq_fluct, fluct, md_hamiltonian, acceptance, time_max, params);
 
     free(h);
     free(p);
     free(potential);
     free(sq_fluct);
+    free(fluct);
     free(md_hamiltonian);
     free(acceptance);
     gsl_rng_free (r);

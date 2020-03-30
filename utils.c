@@ -48,12 +48,14 @@ void vec_scalar_vec_add(double *res, double s, double *v, double *w, long int L)
     }
 }
 
-void print_file(double *v_pot, double *delta_h, double *ham, int *acceptance, int num_steps, parameters params) {
+void print_file(double *v_pot, double *delta_h_sq, double *delta_h, double *ham, int *acceptance, int num_steps, parameters params) {
     /* This function prints an output file with the parameters and observables of an MC chain
 
     input:
         double *v_pot: array with history of potential energies of the MC chain (size: num_steps)
-        double *delta_h: array with history of displacemnts of the MC chain (size: num_steps)
+        double *delta_h_sq: array with history of square displacements of the MC chain (size: num_steps)
+        double *delta_h: array with history of displacements of the MC chain (size: num_steps)
+        double *ham: array with history of HMC Hamiltonian (size: num_steps)
         int *acceptance: array with history of acceptance of the MC chain (size: num_steps)
         int num_steps: number of steps of the chain
         parameters params: struct with parameters
@@ -68,9 +70,9 @@ void print_file(double *v_pot, double *delta_h, double *ham, int *acceptance, in
     obs_file = fopen(str,"w");
     fprintf(obs_file, "N\tP\tM\tv0\tbeta\tnum_steps\n");
     fprintf(obs_file, "%u\t%u\t%u\t%e\t%e\t%u\n", params.N, params.P, params.M, params.v0, params.beta, num_steps);
-    fprintf(obs_file, "i\tV_beta\th^2\tH\tAcc.\n");
+    fprintf(obs_file, "i\tV_beta\th^2\tH_{HMC}\th\tAcc.\n");
     for(unsigned int i = 0; i < num_steps; i++) {
-        fprintf(obs_file, "%u\t%e\t%e\t%e\t%d\n", i, v_pot[i], delta_h[i], ham[i], acceptance[i]);
+        fprintf(obs_file, "%u\t%e\t%e\t%e\t%e\t%d\n", i, v_pot[i], delta_h_sq[i], ham[i], delta_h[i], acceptance[i]);
     }
 
     fclose(obs_file);

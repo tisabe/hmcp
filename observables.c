@@ -39,3 +39,16 @@ double square_fluctuation(double *h, parameters params) {                       
     H /= params.P;
     return H;
 }
+
+double fluctuation(double *h, parameters params) {                       // = 1/P * sum_{n,p} (h_{n,p})^2
+
+    double H = 0;
+    for (int p = 0; p < params.P; p++) {                                        // Summation over all p
+        /*for (int n = 0; n < params.N; n++) {                                    // Summation over all n
+            H += h[tup2ind(n,p,params.P,params.N)] * h[tup2ind(n,p,params.P,params.N)];
+        }*/
+        H += h[tup2ind(1,p,params.P,params.N)]; //h[tup2ind(params.N-1,p,params.P,params.N)];
+    }
+    H /= params.P;
+    return H;
+}
