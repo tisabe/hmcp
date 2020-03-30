@@ -27,28 +27,38 @@ double potential_energy(double *h, parameters params) {
     return V;
 }
 
-double square_fluctuation(double *h, parameters params) {                       // = 1/P * sum_{n,p} (h_{n,p})^2
+double square_fluctuation(double *h, parameters params) {                       // = 1/P * sum_{p} (h_{n,p})^2
+/*
+this function calculates and returns the square fluctuation for the n=N-1 atom given by the inputs.
 
+input:
+    double *h: displacements (N*P matrix)
+    parameters params: struct with parameters
+output:
+    double square fluctuation: square fluctuation of the n=N_1 atom
+*/
     double H = 0;
     for (int p = 0; p < params.P; p++) {                                        // Summation over all p
-        /*for (int n = 0; n < params.N; n++) {                                    // Summation over all n
-            H += h[tup2ind(n,p,params.P,params.N)] * h[tup2ind(n,p,params.P,params.N)];
-        }*/
         H += h[tup2ind(params.N-1,p,params.P,params.N)] * h[tup2ind(params.N-1,p,params.P,params.N)];
     }
-    H /= params.P;
+    H /= params.P; // Division  by P to finish average
     return H;
 }
 
-double fluctuation(double *h, parameters params) {                       // = 1/P * sum_{n,p} (h_{n,p})^2
+double fluctuation(double *h, parameters params) {                       // = 1/P * sum_{p} (h_{n,p})^2
+/*
+this returns the square fluctuation for the system given by the inputs.
 
+input:
+    double *h: displacements (N*P matrix)
+    parameters params: struct with parameters
+output:
+    double fluctuation: displacement of the n=N_1 atom
+*/
     double H = 0;
     for (int p = 0; p < params.P; p++) {                                        // Summation over all p
-        /*for (int n = 0; n < params.N; n++) {                                    // Summation over all n
-            H += h[tup2ind(n,p,params.P,params.N)] * h[tup2ind(n,p,params.P,params.N)];
-        }*/
         H += h[tup2ind(params.N-1,p,params.P,params.N)];
     }
-    H /= params.P;
+    H /= params.P;// Division  by P to finish average
     return H;
 }
