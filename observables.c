@@ -47,7 +47,7 @@ double fluctuation(double *h, parameters params) {                       // = 1/
         /*for (int n = 0; n < params.N; n++) {                                    // Summation over all n
             H += h[tup2ind(n,p,params.P,params.N)] * h[tup2ind(n,p,params.P,params.N)];
         }*/
-        H += h[tup2ind(1,p,params.P,params.N)]; //h[tup2ind(params.N-1,p,params.P,params.N)];
+        H += h[tup2ind(params.N-1,p,params.P,params.N)];
     }
     H /= params.P;
     return H;
