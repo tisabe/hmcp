@@ -14,3 +14,5 @@ v0		= lim_{k->0} omega_ph(k) : Speed of sound in the crystal
 beta		= 1/(k_B T) : Inserve Temperature of the system
 
 *If M = 0 a bisection algorithm with time_max = 10000 will be started to find a good M for a specified acceptance rate.
+	This can be done by eye, by modyfying M until the acceptance rate is in a specific interval.
+	Or one can use the function optimal_m.c, which estimates the optimal value of M with the bisection method.
